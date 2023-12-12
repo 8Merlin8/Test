@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 21855554}
   - component: {fileID: 21855553}
   - component: {fileID: 21855552}
+  - component: {fileID: 21855555}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -200,13 +201,31 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 21855551}
   m_LocalRotation: {x: 0.25933158, y: -0.6911603, z: 0.23697458, w: 0.63157547}
-  m_LocalPosition: {x: 3.18, y: 4.34, z: 11.15}
+  m_LocalPosition: {x: 2.287, y: 3.56, z: 11.043}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 40.931, y: -96.835, z: -4.49}
+--- !u!114 &21855555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21855551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a11a193e6210fab4983736c3e5e0b528, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 941528937}
+  rotationSpeed: 3
+  cameraDistance: 5
+  heightOffset: 2
+  minVerticalAngle: -80
+  maxVerticalAngle: 80
 --- !u!1 &941528931
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,7 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48811c41010d74c4d912b791ec850733, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shotPower: 150
+  shotPower: 250
   stopVelocity: 0.05
   lineRenderer: {fileID: 1254663471}
 --- !u!54 &941528933
@@ -331,7 +350,7 @@ Transform:
   m_GameObject: {fileID: 941528931}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.546, z: 10.24}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1254663472}
@@ -1260,7 +1279,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &436827308223828155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51525,6 +51544,7 @@ GameObject:
   - component: {fileID: 9158511975014787298}
   - component: {fileID: 9158511975014787308}
   - component: {fileID: 9158511975014787309}
+  - component: {fileID: 9158511975014787310}
   m_Layer: 0
   m_Name: Direct (3)
   m_TagString: Untagged
@@ -51583,6 +51603,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &9158511975014787310
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9158511975014787299}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8280180545500042428, guid: 9536a6a0373a4a84db1fa38cbe151dfd, type: 3}
 --- !u!4 &9158511975072767496
 Transform:
   m_ObjectHideFlags: 0
@@ -51743,7 +51777,7 @@ GameObject:
   - component: {fileID: 9158511975598292843}
   m_Layer: 0
   m_Name: Water
-  m_TagString: Untagged
+  m_TagString: Water
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
