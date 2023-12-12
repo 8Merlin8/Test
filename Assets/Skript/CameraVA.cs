@@ -1,73 +1,85 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraVA : MonoBehaviour
 {
-    public Transform playerTransform;
-    public float rotationSpeed = 5f;
-    public float heightOffset = 1.5f;
-    public float maxVerticalAngle = 60f;
-    public float minVerticalAngle = -60f;
+    public Transform target;  // Сюда подставьте мяч
+    public float rotationSpeed = 3f;
+    public float cameraDistance = 5f;
+    public float heightOffset = 2f;
+    public float minVerticalAngle = -80f;
+    public float maxVerticalAngle = 80f;
 
+    private Vector3 offset;
     private bool isRotating = false;
 
-    // Start is called before the first frame update
     void Start()
     {
-
+        offset = transform.position - target.position;
+        
     }
 
-    // Update is called once per frame
     void Update()
     {
-        HandleMouseInput();
-        HandleKeyboardInput();
+        HandleInput();
+
+        if (isRotating)
+        {
+            RotateCamera();
+        }
+        else
+        {
+            UpdateCameraPosition();
+        }
     }
 
-    void HandleMouseInput()
+    void HandleInput()
     {
-        // Если зажата правая кнопка мыши
         if (Input.GetMouseButtonDown(1))
         {
+            Cursor.lockState = CursorLockMode.Locked;
             isRotating = true;
         }
 
-        // Если отпущена правая кнопка мыши
         if (Input.GetMouseButtonUp(1))
         {
+            Cursor.lockState = CursorLockMode.None;
             isRotating = false;
         }
+
+        
     }
-
-    void HandleKeyboardInput()
+void RotateCamera()
     {
-        // Если правая кнопка мыши не зажата
-        if (!isRotating)
-        {
-            float horizontalInput = Input.GetAxis("Horizontal");
-            float verticalInput = Input.GetAxis("Vertical");
+        float mouseX = Input.GetAxis("Mouse X") * rotationSpeed;
+            float mouseY = Input.GetAxis("Mouse Y") * rotationSpeed;
 
-            // Если есть ввод с клавиатуры
-            if (horizontalInput != 0 || verticalInput != 0)
-            {
-                // Проверяем, нажата ли одна из стрелок клавиатуры
-                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow))
-                {
-                    float angle = Mathf.Atan2(horizontalInput, verticalInput);
-                    float angleDegrees = angle * Mathf.Rad2Deg + 90f;
-                    Quaternion rotation = Quaternion.Euler(0f, angleDegrees, 0f);
+            // Вращаем камеру вокруг игрока
+            transform.RotateAround(target.position, Vector3.up, mouseX);
+            transform.RotateAround(target.position, transform.right, -mouseY);
 
-                    // Новая позиция с учетом высоты камеры
-                    Vector3 targetPosition = playerTransform.position - rotation * Vector3.forward * rotationSpeed + Vector3.up * heightOffset;
+            // Ограничиваем углы вращения
+            float currentVerticalAngle = Vector3.Angle(transform.forward, target.position - transform.position) - 90f;
+            currentVerticalAngle = Mathf.Clamp(currentVerticalAngle, minVerticalAngle, maxVerticalAngle);
 
-                    // Плавно перемещаем камеру к новой позиции
-                    transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * 5f);
+            // Устанавливаем новую позицию камеры с учетом высоты
+            Vector3 offsetDir = (transform.position - target.position).normalized;
+            Vector3 newPosition = target.position + offsetDir * heightOffset;
+            transform.position = newPosition;
 
-                    // Направляем камеру на игрока
-                    transform.LookAt(playerTransform.position);
-                }
-            }
-        }
+            // Направляем камеру на игрока
+            transform.LookAt(target.position);
+
+
+            
+    }
+    void UpdateCameraPosition()
+    {
+        // Устанавливаем новую позицию камеры с учетом высоты
+            Vector3 offsetDir = (transform.position - target.position).normalized;
+            Vector3 newPosition = target.position + offsetDir * heightOffset;
+            transform.position = newPosition;
+
+            // Направляем камеру на игрока
+            transform.LookAt(target.position);
     }
 }
